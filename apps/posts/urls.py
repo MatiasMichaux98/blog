@@ -7,5 +7,6 @@ urlpatterns = [
     path('categories/', views.CategoryListView.as_view(), name='category-list'),
     path('post/', views.PostListView.as_view(), name='post-list'),  # Corrige el nombre de la ruta
     path('post/<int:id>/', views.PostDetailView.as_view(), name='post-detail'),
+    path('user/<int:user_id>/posts/', views.UserPostListView.as_view(), name='user-specific-posts'),
 
 ]

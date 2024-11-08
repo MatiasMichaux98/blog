@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from rest_framework import status , generics
+from django.shortcuts import get_object_or_404
 from rest_framework.permissions import AllowAny ,IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser
 from .models import Post, Category
+from apps.authentication.models import User
 from .serializers import PostSerializer,CategorySerializer
 # Create your views here.
 #crear Post
@@ -26,6 +28,16 @@ class CategoryListView(generics.ListAPIView):
 class PostListView(generics.ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+class UserPostListView(generics.ListAPIView):
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        #obtener el ususario id por el user_id que viene en los parametros de la URL 
+        user_id = self.kwargs.get('user_id')
+        user = get_object_or_404(User, id=user_id)
+        return Post.objects.filter(user=user)
+        
 
 class PostDetailView(generics.RetrieveAPIView):
     queryset = Post.objects.all()

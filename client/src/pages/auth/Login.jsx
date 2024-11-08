@@ -43,7 +43,7 @@ function Login({ handleLogin }) {
     
     try {
       if (isRegistering) {
-        await axios.post("/register/", { username, email, password });
+        await axios.post("/register/", { username, email, password,password2 });
         console.log("Usuario registrado");
         navigate("/home");
       } else {
@@ -61,7 +61,7 @@ function Login({ handleLogin }) {
   };
   return (
     <>
-     <body className="mainBody">
+     <div className="mainBody">
       <div className="container" id="container">
           {/* Formulario de registro */}
           {isRegistering ? (
@@ -160,7 +160,7 @@ function Login({ handleLogin }) {
             </div>
           </div>
         </div>
-     </body>
+     </div>
     </>
   );
   
