@@ -1,11 +1,13 @@
 import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
 import { useEffect, useState } from "react";
 import Home from "./pages/dashboard/Home";
 import PrivateRoute from './layouts/PrivateRoute'
 import Profile from "./pages/profile/Profile";
 import EditProfile from "./pages/profile/EditProfile";
 import CreatePost from "./pages/post/CreatePost";
+import Sidebar from "./components/Sidebar";
 export default function App() {
   const[isAuthenticated, setIsAuthenticated] = useState(
     !!localStorage.getItem('accessToken')
@@ -33,6 +35,8 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/login" element={<Login handleLogin={handleLogin}/>} />
+      <Route path="/register" element={<Register/>} />
+      
       
       {/*rutas privadas */}
       <Route path="/home" element={
@@ -53,6 +57,11 @@ export default function App() {
        <Route path="/create-post" element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
               <CreatePost />
+            </PrivateRoute>
+          } />
+        <Route path="/sidebar" element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <Sidebar />
             </PrivateRoute>
           } />
     </Routes>
