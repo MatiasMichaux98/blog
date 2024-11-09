@@ -1,6 +1,5 @@
 import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
 import { useEffect, useState } from "react";
 import Home from "./pages/dashboard/Home";
 import PrivateRoute from './layouts/PrivateRoute'
@@ -35,8 +34,6 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/login" element={<Login handleLogin={handleLogin}/>} />
-      <Route path="/register" element={<Register/>} />
-      
       
       {/*rutas privadas */}
       <Route path="/home" element={
