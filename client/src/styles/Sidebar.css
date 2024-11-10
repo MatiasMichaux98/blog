@@ -3,13 +3,11 @@ body {
     padding: 0; /* Elimina el padding del body */
   }
 #sidebar-container {
-    background-color: #292929;
+    background-color: #161616;
     position: fixed;
-    height: 100vh; /* Para ocupar toda la altura de la pantalla */
-    width: 250px; /* Ajusta el ancho según tu diseño */
+    height: 100vh; 
     padding: 0;
     margin: 0;
-    overflow-y: auto; /* Para añadir scroll en caso de que el contenido exceda el alto */
     z-index: 1000;
 }
 #sidebar-container ul {

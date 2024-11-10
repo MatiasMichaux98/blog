@@ -54,7 +54,7 @@ function Profile () {
     return (
         
         <div className="profile-menu">
-            <div>
+            <div className="menu-sidebar">
               <Sidebar /> 
             </div>
             <div className="Profilebody">   
@@ -96,7 +96,7 @@ function Profile () {
                     </div>
                 </div>
                 <div className="user-posts">
-                <h2>Posts del Usuario</h2>
+                    <li className="sidebar-separator menu-collapsed"><hr /></li>  
                 <div className="postcomplete">
                     {postsError ? (
                         <div>{postsError}</div>

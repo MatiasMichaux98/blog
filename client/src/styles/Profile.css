@@ -1,21 +1,25 @@
 .Profilebody {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: flex-start;
     flex-direction: column;
     height: auto;
     margin: 20px;
-    text-align: center;
+    text-align: start;
+    max-width: 934px;
+
 }
 .profile-menu{
+    min-height: 100vh;
+    background-color: #212121;
     display: grid;
     grid-template-columns: 1fr 2fr; 
-    gap: 1rem;
+  
 }
 .container-profile {
-    max-width: 88rem;
+    max-width: 90rem;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 auto;
 }
 .profile {
     display: grid;
@@ -85,11 +89,15 @@
 }
 .postcomplete{
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Two equal columns */
+    grid-template-columns: repeat(3, 1fr); 
     gap: 1rem;
 }
-
 .post img {
     width: 200px;
     height: 100px;
   }
+.menu-sidebar{
+    width: auto;
+    padding: 0;
+    margin: 0;
+}
