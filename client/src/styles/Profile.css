@@ -1,10 +1,16 @@
 .Profilebody {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     flex-direction: column;
-    height: 50vh;
+    height: auto;
+    margin: 20px;
     text-align: center;
+}
+.profile-menu{
+    display: grid;
+    grid-template-columns: 1fr 2fr; 
+    gap: 1rem;
 }
 .container-profile {
     max-width: 88rem;
@@ -15,11 +21,11 @@
     display: grid;
     grid-template-columns: 1fr 2fr; 
     gap: 1rem;
-    height: 12rem;}
+    height: auto;}
 .profile-image {
     display: flex;
     justify-content: center;
-    max-width: 190px;}
+    max-width: auto;}
 .profile-image img {
     width: 100%;
     max-height: 200px;
@@ -41,7 +47,7 @@
 .profile-user-name {
     display: inline-block;
     color: #ffffff;
-    font-size: 2.2rem;
+    font-size: 1.5rem;
     font-weight: 300;
     margin-right: 2rem;
 }
@@ -71,5 +77,19 @@
     color: white;
     font-size: 14px;
     font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
-    
 }
+/*Parte post*/
+.user-posts{
+    margin-top: 20px;
+    max-height: 400px; 
+}
+.postcomplete{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Two equal columns */
+    gap: 1rem;
+}
+
+.post img {
+    width: 200px;
+    height: 100px;
+  }

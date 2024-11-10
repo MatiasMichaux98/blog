@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/Profile.css";
 import React from "react";
-
+import Sidebar from '../../components/Sidebar'
 function Profile () {
     const [profile, setProfile] = useState(null); // para los datos del perfil
     const [loading, setLoading] = useState(true);
@@ -52,12 +52,19 @@ function Profile () {
     if (error) return <div>{error}</div>;
 
     return (
-        <div className="Profilebody">
+        
+        <div className="profile-menu">
+            <div>
+              <Sidebar /> 
+            </div>
+            <div className="Profilebody">   
             <div className="container-profile">
+                
                 <div className="profile">
                     <div className="profile-image">
-                        <img src={profile?.image || 'ruta/a/imagen/default.jpg'} alt="Perfil" /> {/* Imagen por defecto */}
+                        <img src={profile?.image || 'ruta/a/imagen/default.jpg'} alt="Perfil" /> 
                     </div>
+                    
                     <div className="contenido">
                         <div className="profile-user-settings">
                             <h1 className="profile-user-name">{profile?.full_name || 'Usuario desconocido'}</h1>
@@ -85,26 +92,32 @@ function Profile () {
                                 <li><span className="profile-stat-count">{posts.length}</span> posts</li>
                             </ul>
                         </div>
+                          
                     </div>
                 </div>
                 <div className="user-posts">
-                    <h2>Posts del Usuario</h2>
+                <h2>Posts del Usuario</h2>
+                <div className="postcomplete">
                     {postsError ? (
-                         <div>{postsError}</div>
+                        <div>{postsError}</div>
                     ) : posts.length > 0 ? (
                         posts.map((post, index) => (
                             <div key={index} className="post">
+                            <Link to={`/post/${post.id}`} className="post-link">
                                 <h3>{post.title}</h3>
-                                <p>{post.description}</p>
                                 {post.image && <img src={post.image} alt={post.title} />}
+                            </Link>
                             </div>
                         ))
                     ) : (
                         <div>No hay posts disponibles</div>
                     )}
                 </div>
+                </div>
             </div>
         </div>
+        </div>
+        
     );
 }
 

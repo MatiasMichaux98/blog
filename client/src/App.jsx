@@ -7,6 +7,7 @@ import Profile from "./pages/profile/Profile";
 import EditProfile from "./pages/profile/EditProfile";
 import CreatePost from "./pages/post/CreatePost";
 import Sidebar from "./components/Sidebar";
+import PostDetail from "./pages/post/PostDetail ";
 export default function App() {
   const[isAuthenticated, setIsAuthenticated] = useState(
     !!localStorage.getItem('accessToken')
@@ -59,6 +60,11 @@ export default function App() {
         <Route path="/sidebar" element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
               <Sidebar />
+            </PrivateRoute>
+          } />
+          <Route path="/post/:id" element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <PostDetail />
             </PrivateRoute>
           } />
     </Routes>
