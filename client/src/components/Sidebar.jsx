@@ -1,5 +1,5 @@
 import "../styles/Sidebar.css"
-
+import { Link } from "react-router-dom"
 function Sidebar() {
   return (
     <div id="sidebar-container" className="sidebar-expanded d-none d-md-block">
@@ -8,12 +8,14 @@ function Sidebar() {
                 <small className="Title" >MAIN MENU</small>
             </li>
             <li className="sidebar-separator menu-collapsed"><hr /></li>  
-           <a href=""  className="bg-dark list-group-item list-group-item-action flex-column align-items-start">
-                <div className="d-flex">
-                <span id="collapse-icon" className=" fa fa-dashboard fa-fw mr-3"></span> 
-                    <span className="menu-collapsed">Dashboard</span>
-                </div>
-           </a>
+
+            <Link to="/home" className="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+                  <div className="d-flex">
+                      <span id="collapse-icon" className=" fa fa-dashboard fa-fw mr-3"></span> 
+                      <span className="menu-collapsed">Home</span>
+                  </div>
+            </Link>
+           
            <a href="" className="bg-dark list-group-item list-group-item-action flex-column align-items-start">
             <div className="d-flex">
             <span id="collapse-icon" className="fa fa-user fa-fw mr-3"></span>
@@ -21,12 +23,13 @@ function Sidebar() {
                     <span className="submenu-icon ml-auto"></span>
             </div>
            </a>
-           <a href="" className="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+           <Link to='/create-post' className="bg-dark list-group-item list-group-item-action flex-column align-items-start">
                 <div className="d-flex">
-                <span id="collapse-icon" className=" fa fa-tasks fa-fw mr-3"></span>
-                <span className="menu-collapsed">Tasks</span>    
+                  <span id="collapse-icon" className=" fa fa-tasks fa-fw mr-3"></span>
+                  <span className="menu-collapsed">Crear</span>    
                 </div>
-           </a>
+           </Link>
+           
            <li className="list-group-item sidebar-separator menu-collapsed"><hr /></li>  
            <a href="" className="bg-dark list-group-item list-group-item-action flex-column align-items-start">
             <div className="d-flex">
@@ -44,11 +47,11 @@ function Sidebar() {
 
         <ul className="list-group-two">
           <div className="d-flex-two">
-              <a href="">
-                      <span id="collapse-icon" className="fa fa-user fa-fw mr-3"></span>
-                      <span className="menu-collapsed">Profile</span>
-                      <span className="submenu-icon ml-auto"></span>
-              </a>
+            <Link to="/profile">
+                <span id="collapse-icon" className="fa fa-user fa-fw mr-3"></span>
+                          <span className="menu-collapsed">Perfil</span>
+                          <span className="submenu-icon ml-auto"></span>
+                </Link>
           </div>
         </ul>
     </div>

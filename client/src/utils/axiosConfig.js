@@ -25,18 +25,24 @@ axios.interceptors.response.use(
             originalRequest._retry = true;
             const refreshToken = localStorage.getItem('refreshToken');
 
-            try {
-                // Envía la solicitud para refrescar el token
-                const res = await axios.post('/token/refresh/', { refresh: refreshToken });
-                localStorage.setItem('accessToken', res.data.access);
-                originalRequest.headers['Authorization'] = 'Bearer ' + res.data.access;
-                return axios(originalRequest); // Reintenta la solicitud original
-            } catch (refreshError) {
-                console.error('Error al refrescar el token', refreshError);
-                // Redirige al login si no se puede refrescar el token
-                window.location.href = '/login'; // Ajusta según la ruta de tu login
-                return Promise.reject(refreshError);
-            }
+           if(refreshToken){
+                try {
+                    // Envía la solicitud para refrescar el token
+                    const res = await axios.post('/token/refresh/', { refresh: refreshToken });
+                    localStorage.setItem('accessToken', res.data.access);
+                    originalRequest.headers['Authorization'] = 'Bearer ' + res.data.access;
+                    return axios(originalRequest); // Reintenta la solicitud original
+                } catch (refreshError) {
+                    console.error('Error al refrescar el token', refreshError);
+                    // Redirige al login si no se puede refrescar el token
+                    window.location.href = '/login'; // Ajusta según la ruta de tu login
+                    return Promise.reject(refreshError);
+                }
+           }else{
+                // Si no hay refreshToken, redirigir al login directamente
+                window.location.href = '/login';
+                return Promise.reject(error);
+           }
         }
 
         return Promise.reject(error); // Rechaza el error original

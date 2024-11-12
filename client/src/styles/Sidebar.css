@@ -1,6 +1,6 @@
 body {
-    margin: 0; /* Elimina el margen del body */
-    padding: 0; /* Elimina el padding del body */
+    margin: 0; 
+    padding: 0; 
   }
 #sidebar-container {
     background-color: #161616;

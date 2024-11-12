@@ -2,7 +2,7 @@ from django.db import models
 from apps.authentication.models import User 
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-
+from PIL import Image
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -20,7 +20,19 @@ class Profile(models.Model):
         if not self.full_name:
             self.full_name = self.user.full_name
         
-        super(Profile, self).save(*args, **kwargs)
+         #llamamos al metodo origina para guardar el archivo
+        super().save(*args, **kwargs)
+        #esto es para abrir la imagen
+        img_path = self.image.path
+        img = Image.open(img_path)
+
+        #comprimimos la imagen ajustando la calidad 
+        if img.mode in ("RGBA","P"):
+            img = img.convert("RGB")
+        
+        img.save(img_path, quality=50, optimize=True)
+
+
 
     #señales para que al crear un usuario se cree el perfil automaticamente 
     @receiver(post_save, sender=User)
