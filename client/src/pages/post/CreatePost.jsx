@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import '../../styles/CreateForm.css'
 
 function CreatePost() {
     const[title, setTitle] = useState('');
@@ -49,20 +50,33 @@ function CreatePost() {
         }
     }
   return (
-        <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
-        <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
-        <select value={category} onChange={(e) => setCategory(e.target.value)} required>
-            <option value="">Selecciona una categoría</option>
-            {categories.map((cat) => (
-                <option key={cat.id} value={cat.id}>{cat.name}</option>
-            ))}
-        </select>
-        <input type="text" placeholder="Tags" value={tags} onChange={(e) => setTags(e.target.value)} required />
-        <input type="file" onChange={(e) => setImage(e.target.files[0])} />
-        <button type="submit">Create Post</button>
-    </form>
+    <div className="contenido">
+        <div className="posteo" >
+            <h2>Add New Post</h2>
+            <form className="postForm" onSubmit={handleSubmit}>
+            <label htmlFor="">Titulo</label>
+            <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
+            <label htmlFor="">Descripción</label>
+            <textarea placeholder="Description" rows="10" value={description} onChange={(e) => setDescription(e.target.value) } />
+            <label htmlFor="">Categoria</label>
+            <select value={category} onChange={(e) => setCategory(e.target.value)} required>
+                <option value="">Selecciona una categoría</option>
+                {categories.map((cat) => (
+                    <option key={cat.id} value={cat.id}>{cat.name}</option>
+                ))}
+            </select>
+            <label htmlFor="">Tags</label>                        
+            <input type="text" placeholder="Tags" value={tags} onChange={(e) => setTags(e.target.value)} required />
+            <label htmlFor="">Selecciona Imagen</label>             
+            <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+            <div className="draw">
+                <button className="button" type="submit">Create Post</button>
+            </div>
+            </form>
+        </div>
+    </div>
   )
 }
+
 
 export default CreatePost
