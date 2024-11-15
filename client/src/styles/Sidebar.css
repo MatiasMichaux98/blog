@@ -1,69 +1,72 @@
-body {
-    margin: 0; 
-    padding: 0; 
-  }
-#sidebar-container {
-    background-color: #161616;
-    position: fixed;
-    height: 100vh; 
+body{
     padding: 0;
     margin: 0;
+}
+*{
+    box-sizing: border-box;
+}
+.home-sidebar {
+    background-color: #171717;
+    height: 100vh;  
+    width:  260px;
+    padding: 20px 0px 20px 20px;
+    position: fixed;
     z-index: 1000;
 }
-#sidebar-container ul {
-    max-height: 100%;
-    list-style-type: none;   
+.separator{border-color: #383737;}
+.home-sidebar ul {
+    margin: 0;
+    padding: 0;
 }
-.sidebar-expanded {
-    width: 230px;
+.list-group li {
+    list-style-type: none;
 }
-
-.list-group-item a {
-    height: 50px;
-}
-.sidebar-separator {
-    height: 25px;
-}
-.sidebar-separator hr {
-    border: none;
-    background-color: rgb(95, 93, 93);
-    height: 2px; 
-}
-
-.list-group {   
-    padding: 0px;
-    margin-top: 20px;    
-}
-.list-group-two {
-    padding: 0px;
-}
-.Title{
-    color: rgb(95, 93, 93);
-    padding: 20px;
-}
-.list-group a {
-    color:  rgb(95, 93, 93);
-    text-decoration: none;
-}
-.list-group-two a {
-    color:  rgb(95, 93, 93);
+#list-side a{
     text-decoration: none;
 }
 .d-flex{
     padding: 10px;
 }
-.d-flex-two{
+.d-flex:hover{
+    width: 90%;
+    border-radius: 10px;
+    border-bottom: 1px solid white;
+    border-top: 1px solid white;
+    background-color: #383737;
+}
+
+.Title{
     display: flex;
+    justify-content: center;
+    color:  #E5E5E5;
     padding: 10px;
+    font-size: 15px;
+}
+.list-group a{
+    color: #E5E5E5;
 }
 .menu-collapsed{
-    font-size: 15px;
+    margin-left: 10px;
 }
-#collapse-icon{
-    font-size: 15px;
-    margin-right: 10px;
+#collapse-icon, #collapse-text{
+    font-size: 20px;
 }
-ul.list-group-two {
-    position: absolute;
-    bottom: 2rem;
+
+
+/*responsive*/
+@media (max-width: 1020px) {
+    .home-sidebar {
+        width:  70px;
+        padding: 20px 0px 20px 10px;
+    }
+    #collapse-text{
+        display: none;
+    }
+    .d-flex:hover{
+        width: 75%;
+    
+    }
+    .Title{
+        display: none;
+    }
 }

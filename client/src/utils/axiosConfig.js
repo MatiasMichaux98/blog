@@ -30,6 +30,9 @@ axios.interceptors.response.use(
                     // Envía la solicitud para refrescar el token
                     const res = await axios.post('/token/refresh/', { refresh: refreshToken });
                     localStorage.setItem('accessToken', res.data.access);
+                    if (res.data.refresh) {
+                        localStorage.setItem('refreshToken', res.data.refresh);
+                    }                    
                     originalRequest.headers['Authorization'] = 'Bearer ' + res.data.access;
                     return axios(originalRequest); // Reintenta la solicitud original
                 } catch (refreshError) {

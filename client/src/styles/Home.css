@@ -1,73 +1,89 @@
-.Homebody {
-    display: flex;
-    justify-content: start;
-    align-items: flex-start;
-    flex-direction: column;
-    height: auto;
-    margin: 20px;
-    text-align: start;
-    max-width: 934px;
-    padding: 30px;
-}
-.home-menu{
-    min-height: 100vh;
-    background-color: #212121;
-    display: grid;
-    grid-template-columns: 1fr 2fr; 
-}
-.home-sidebar{
-    width: auto;
+body{
     padding: 0;
     margin: 0;
+    background-color: #212121;
+
+}
+*{
+    box-sizing: border-box;
+}
+
+.home-menu{
+    display: grid;
+    grid-template-areas:
+    "home-sidebar Homebody";
+    grid-template-columns: 1fr 3fr;
+    height: 100vh;
+  
+}
+.home-sidebar {
+    grid-area: home-sidebar;
+    padding: 0px;
+  }
+  
+.Homebody {
+    grid-area: Homebody;
+    padding: 20px;
+    overflow-y: auto; /*sirve para el scroll*/
+  }
+
+/*header*/
+.topbar{
+   background-color: #2e2e2e;
+   margin-bottom: 20px;
+   padding: 20px;
+   border-radius: 10px;
+}
+.topbar ul{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    list-style-type: none;
+}
+.topbar a {
+    text-decoration: none;
+    color: white;
+}
+
+/*cuerpo tarjetas/Post*/
+
+.content{
+    display: grid;
+    grid-template-areas:
+    "contenedor ";
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.content li{
+    list-style-type: none;
 }
 .contenedor{
-    background-color: #212121;
-    transition: background-color 0.6s;
-    color: white;
-    border-bottom: 1px solid white;
-    width: 400px;
-    height: 100%;
-    padding: 10px;
+    grid-area: Homebody;
+    width: 440px;
+    background-color: #2e2e2e;
     border-radius: 10px;
+    padding: 10px;
+    border-bottom: 1px solid snow;
     cursor: pointer;
     
 }
-.contenedor:hover{
-    background-color: aliceblue;
-    color: black;
+.contenedor h3{
+    color: rgb(241, 196, 255);
+    font-size: 25px;
+    font-family:cursive;
 }
-.content{
-    width: 100%;
-    position: relative;
-    padding: 20px 40px 20px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 1rem;
-}
-.post-content p{
+.post-description{
+    color: antiquewhite;
+    font-size: 18px;
+    font-family: 'Times New Roman', Times, serif;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.col-s-4{
-    margin-bottom: 25px;
-    text-decoration: none;
-    list-style-type: none;
-}
-.btn-left{
+.btn-left, .btn-right{color: rgb(241, 196, 255);}
+.btn-right{
     float: right;
-    margin-right: 30px;
 }
-.push-right ul{
-    display: flex;
-    font-size: 30px;
-    justify-content: space-around;
-    list-style-type: none;
-}
-.push-right a {
-    text-decoration: none;
-    color: snow;
-}
-.push-right a:hover{
-    color: #6e6e6e;
+.contenedor:hover{
+    background-color: #454545;
 }

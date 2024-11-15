@@ -34,15 +34,14 @@ function Home() {
         <Sidebar />
       </div>
       <div className="Homebody">
-        <div className="blog">
-          <div className="topbar">
+         <div className="topbar">
             <nav className="push-right">
               <ul>
                 <li>
-                  <a href="#">Ver todos los post</a>
+                  <a href="/home">Ver todos los post</a>
                 </li>
                 <li>
-                  <a href="#">Crear nuevo Post</a>
+                  <a href="/create-post">Crear nuevo Post</a>
                 </li>
               </ul>
             </nav>
@@ -50,19 +49,18 @@ function Home() {
 
           <div className="content">
               {posts.map((post, index) => (
-                <li key={index} className="col-s-4">
+                <li key={index} className="list-name">
                   <div className="contenedor">
                     <div className="post-content">
                       <h3 className="post-title">{post.title}</h3>
                       <p className="post-description">{post.description}</p>
-                      <p className="btn-left fa fa-comment push-left"></p>
-                      <p className="btn-right fa fa-heart push-right"></p>
+                      <p className="btn-left fa fa-comment"></p>
+                      <p className="btn-right fa fa-heart"></p>
                     </div>
                   </div>
                 </li>
               ))}
           </div>
-        </div>
       </div>
     </div>
   );
