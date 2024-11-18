@@ -31,7 +31,6 @@ body{
     width: 90%;
     border-radius: 10px;
     border-bottom: 1px solid white;
-    border-top: 1px solid white;
     background-color: #383737;
 }
 
@@ -54,7 +53,7 @@ body{
 
 
 /*responsive*/
-@media (max-width: 1020px) {
+@media (max-width: 1135px) {
     .home-sidebar {
         width:  70px;
         padding: 20px 0px 20px 10px;
@@ -69,4 +68,28 @@ body{
     .Title{
         display: none;
     }
+}
+@media (max-width: 500px) {
+    .home-sidebar {
+        position: relative; 
+        width: 100%; 
+        height: 60px; 
+        top: 0; 
+        left: 0;
+        padding: 10px; 
+        z-index: 999; 
+    }
+    .list-group {
+        display: flex; 
+        justify-content: space-around; 
+        padding-left: 0;
+        margin: 0;
+    }
+    .d-flex:hover {
+        width: auto;
+        border-radius: 10px;
+        background-color: #383737;
+    }
+
+   
 }

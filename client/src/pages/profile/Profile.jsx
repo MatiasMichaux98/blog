@@ -52,71 +52,79 @@ function Profile () {
     if (error) return <div>{error}</div>;
 
     return (
-        
-        <div className="profile-menu">
-            <div className="menu-sidebar">
-              <Sidebar /> 
-            </div>
-            <div className="Profilebody">   
-            <div className="container-profile">
-                
-                <div className="profile">
-                    <div className="profile-image">
-                        <img src={profile?.image || 'ruta/a/imagen/default.jpg'} alt="Perfil" /> 
-                    </div>
-                    
-                    <div className="contenido">
-                        <div className="profile-user-settings">
-                            <h1 className="profile-user-name">{profile?.full_name || 'Usuario desconocido'}</h1>
-                            <Link className="btn-profile-edit" to="/editProfile">
-                                <button className="textoBtnEdit">Editar Perfil</button>
-                            </Link>
-                            <Link className="btn profile-settings-btn" to="/editProfile">
-                                <button className="btn-settings" aria-label="profile settings">
-                                    <i className="fas fa-cog" aria-hidden="true"></i>
-                                </button>
-                            </Link>
-                        </div>
-                        <div className="profile-bio">
-                            <span className="profile-real-name">
-                                {(profile?.bio || '').split('\n').map((line, index) => (
-                                    <React.Fragment key={index}>
-                                        {line}
-                                        <br />
-                                    </React.Fragment>
-                                ))}
-                            </span>
-                        </div>
-                        <div className="profile-stats">
-                            <ul>
-                                <li><span className="profile-stat-count">{posts.length}</span> posts</li>
-                            </ul>
-                        </div>
-                          
-                    </div>
+            
+            <div className="Profile-main">
+                <div className="content-menu-two">
+                    <Sidebar />
                 </div>
-                <div className="user-posts">
-                    <li className="sidebar-separator menu-collapsed"><hr /></li>  
-                <div className="postcomplete">
-                    {postsError ? (
-                        <div>{postsError}</div>
-                    ) : posts.length > 0 ? (
-                        posts.map((post, index) => (
-                            <div key={index} className="post">
-                            <Link to={`/post/${post.id}`} className="post-link">
-                                <h3>{post.title}</h3>
-                                {post.image && <img src={post.image} alt={post.title} />}
-                            </Link>
+                <div className="Profilebody">   
+                    <div className="container-profile">
+                        
+                        <div className="profile">
+                            <div className="profile-image">
+                                <img src={profile?.image || 'ruta/a/imagen/default.jpg'} alt="Perfil" /> 
                             </div>
-                        ))
-                    ) : (
-                        <div>No hay posts disponibles</div>
-                    )}
-                </div>
+                            
+                            <div className="contenido-main">
+                                <div className="profile-user-settings">
+                                    <h1 className="profile-user-name">{profile?.full_name || 'Usuario desconocido'}</h1>
+                                    <Link className="btn-profile-edit" to="/editProfile">
+                                        <button className="textoBtnEdit">Editar Perfil</button>
+                                    </Link>
+                                    <Link className="btn profile-settings-btn" to="/editProfile">
+                                        <button className="btn-settings" aria-label="profile settings">
+                                            <i className="fas fa-cog" aria-hidden="true"></i>
+                                        </button>
+                                    </Link>
+                                </div>
+                                <div className="profile-bio">
+                                    <span className="profile-real-name">
+                                        {(profile?.bio || '').split('\n').map((line, index) => (
+                                            <React.Fragment key={index}>
+                                                {line}
+                                                <br />
+                                            </React.Fragment>
+                                        ))}
+                                    </span>
+                                </div>
+                                <div className="profile-stats">
+                                    <ul>
+                                        <li><span className="profile-stat-count">{posts.length}</span> posts</li>
+                                    </ul>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <hr className="barra"/>
+
+                        <div className="user-posts">
+                        <div className="postcomplete">
+                            {postsError ? (
+                                <div>{postsError}</div>
+                            ) : posts.length > 0 ? (
+                                posts.map((post, index) => (
+                                    <li key={index} className="list-name-two">
+                                    <div className="contenedor-two">
+                                        <div className="post-content-two">
+                                        <h3 className="post-title-two">{post.title}</h3>
+                                        <p className="post-description-two">{post.description}</p>
+                                        <div className="btn-figure-two">
+                                            <p className="btn-left-two fa fa-comment"></p>
+                                            <p className="btn-right-two fa fa-heart"></p>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </li>
+                                ))
+                            ) : (
+                                <div>No hay posts disponibles</div>
+                            )}
+                        </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        </div>
+          
         
     );
 }
