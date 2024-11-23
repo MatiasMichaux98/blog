@@ -6,16 +6,17 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-        // Color para encabezados, pie de página, y menú de navegación
-        carbon: '#333333',
-        
-        // Color para fondo de contenido principal y formularios
-        pureWhite: '#FFFFFF',
-        
-        // Color para botones de llamada a la acción, bordes o íconos
-        softGold: '#C5A880',
-        softGoldHover:'#968062'
+      backgroundImage: {
+        'custom-gradient': 'linear-gradient(to right, #FFFFFF, #ECE9E6)',
+        'back-category': 'linear-gradient(to bottom, #2F80ED, #56CCF2);'
+      },
+      screens: {
+        'laptop-md': '1100px', 
+        'medium': '400px', 
+      },
+      fontFamily: {
+        'playfair-display': ['"Playfair Display"', 'serif'],
+        'quicksand': ['Quicksand', 'sans-serif'],
       },
     },
   },

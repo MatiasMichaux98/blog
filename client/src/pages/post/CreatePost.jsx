@@ -26,10 +26,11 @@ function CreatePost() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log('Category selected:', category);
         const formData = new FormData();
         formData.append('title', title);
         formData.append('description',description)
-        formData.append('category', category)
+        formData.append('category', parseInt(category));
         formData.append('tags',tags)
         if (image) formData.append('image', image)
         

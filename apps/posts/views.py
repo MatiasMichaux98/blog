@@ -5,12 +5,12 @@ from rest_framework.permissions import AllowAny ,IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser
 from .models import Post, Category
 from apps.authentication.models import User
-from .serializers import PostSerializer,CategorySerializer
+from .serializers import PostSerializer,PostSerializers,CategorySerializer
 # Create your views here.
 #crear Post
 class CreatePostView(generics.CreateAPIView):
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
+    serializer_class = PostSerializers
     permission_classes =  (IsAuthenticated,)
     parser_classes = [MultiPartParser, FormParser]
     #multiparser para manejar archivos como imagenes etc 
@@ -25,6 +25,7 @@ class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
+
 class PostListView(generics.ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -38,7 +39,6 @@ class UserPostListView(generics.ListAPIView):
         user = get_object_or_404(User, id=user_id)
         return Post.objects.filter(user=user)
         
-
 class PostDetailView(generics.RetrieveAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
