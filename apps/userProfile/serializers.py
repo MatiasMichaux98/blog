@@ -5,7 +5,7 @@ from apps.authentication.serializers import UserSerializer
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['id','image','full_name','bio','author','country','date']
+        fields = ['id','image','full_name','bio','author']
     
     def to_representation(self, instance):
         response =  super().to_representation(instance)

@@ -29,7 +29,7 @@ function Home() {
   if (error) {
     return <div>{error}</div>;
   }
-
+ 
   return (
     <div className="grid grid-rows-1 sm:grid-cols-[0.3fr_3fr] md:grid-cols-[0.3fr_3fr] laptop-md:grid-cols-[0.9fr_3fr] lg:grid-cols-[0.3fr_3fr]  bg-[#202020]">
       {/* Sidebar */}
@@ -72,10 +72,11 @@ function Home() {
                         <div className="flex justify-between items-center p-[0px_20px_10px_20px]">
                         <div className="flex justify-start items-center	gap-1 button-wrapper">
                         <img
-                            className="rounded-full w-10 h-10 border-[#9147FF]"
-                            src={post.profile?.image}  // Asegúrate de usar `post.profile` y no `post.Profile`
-                            alt="Perfil"
-                          />
+                          className="rounded-full w-10 h-10 border-[#9147FF]"
+                          src={`http://localhost:8000${post.profile_image}`} // Concatenamos la URL base con la ruta relativa
+                          alt="Perfil"
+                        />
+                                                  
                           <span className="text-xs">{post.full_name}</span>
                         </div>
                         <Link

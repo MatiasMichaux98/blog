@@ -77,32 +77,11 @@ function Profile() {
                 <h1 className="profile-user-name text-lg text-white">
                   {profile?.full_name || "Usuario desconocido"}
                 </h1>
-                <div className="btn-settings flex flex-row gap-[10px]">
+                <div className="btn-settings flex flex-row gap-[0px]">
                   <Link className="btn-profile-edit 	" to="/editProfile">
-                    <button className=" flex items-center p-1 pr-2 rounded-md text-white bg-[#9147FF] ">
-                      <svg
-                        className="w-4 h-4 mr-1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          stroke="currentColor"
-                          d="M4 12.25V1m0 11.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M4 19v-2.25m6-13.5V1m0 2.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M10 19V7.75m6 4.5V1m0 11.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM16 19v-2"
-                        />
-                      </svg>
+                    <button className=" flex items-center p-1 pr-3 rounded-md text-white bg-[#9147FF] " >
+                    <span id="collapse-icon" className="fa fa-gear fa-fw mr-3  "></span>
                       Editar Perfil
-                    </button>
-                  </Link>
-                  <Link className="btn-profile-edit " to="/editProfile">
-                    <button
-                      className="flex  items-center p-1 pr-2 rounded-md text-white bg-[#9147FF] "
-                      aria-label="profile settings"
-                    >
-                      <i
-                        className="fas fa-cog w-4 h-6 mr-1  content-center "
-                        aria-hidden="true"
-                      ></i>
                     </button>
                   </Link>
                 </div>

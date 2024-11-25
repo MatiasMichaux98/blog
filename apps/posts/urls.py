@@ -1,6 +1,7 @@
 from django.urls import path
 from apps.posts import views
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('create-post/', views.CreatePostView.as_view(), name='create-post'),
@@ -10,3 +11,5 @@ urlpatterns = [
     path('user/<int:user_id>/posts/', views.UserPostListView.as_view(), name='user-specific-posts'),
 
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

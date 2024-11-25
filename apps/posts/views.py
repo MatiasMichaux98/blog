@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from rest_framework import status , generics
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import AllowAny ,IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser
 from .models import Post, Category
 from apps.authentication.models import User
 from .serializers import PostSerializer,PostSerializers,CategorySerializer
+
 # Create your views here.
 #crear Post
 class CreatePostView(generics.CreateAPIView):
@@ -29,6 +30,9 @@ class CategoryListView(generics.ListAPIView):
 class PostListView(generics.ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    
+    def get_serializer_context(self):
+        return {'request': self.request}
 
 class UserPostListView(generics.ListAPIView):
     serializer_class = PostSerializer
