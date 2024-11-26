@@ -10,10 +10,11 @@ class CategorySerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
     profile_image = serializers.SerializerMethodField() 
+    username = serializers.SerializerMethodField()
     
     class Meta:
         model = Post
-        fields = ['id','title', 'description', 'category', 'tags', 'image','profile_image']
+        fields = ['id','title', 'description', 'category', 'tags', 'image','profile_image','username']
 
     def get_profile_image(self, obj):
         # Devuelve la URL de la imagen de perfil del usuario que creó el post
@@ -21,6 +22,8 @@ class PostSerializer(serializers.ModelSerializer):
         if profile and profile.image:
             return profile.image.url
         return None 
+    def get_username(self, obj):
+        return obj.user.username
 
 class PostSerializers(serializers.ModelSerializer):
 

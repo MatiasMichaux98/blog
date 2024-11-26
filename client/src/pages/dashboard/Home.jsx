@@ -77,7 +77,7 @@ function Home() {
                           alt="Perfil"
                         />
                                                   
-                          <span className="text-xs">{post.full_name}</span>
+                          <span className="text-xs">{post.username}</span>
                         </div>
                         <Link
                           className="text-sm hover:text-[#B366FF]"
