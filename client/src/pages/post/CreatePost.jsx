@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
+import { useNavigate } from "react-router-dom";
 
 function CreatePost() {
   const [title, setTitle] = useState("");
@@ -9,7 +10,7 @@ function CreatePost() {
   const [tags, setTags] = useState("");
   const [image, setImage] = useState(null);
   const [categories, setCategories] = useState([]);
-
+  const navigate = useNavigate();
   //cargar las categorias al montar el componente
   const loadCategories = async () => {
     try {
@@ -44,7 +45,7 @@ function CreatePost() {
         },
       });
       alert("Post creado exitosamente!");
-      console.log("token", token);
+      navigate("/profile");
     } catch (error) {
       console.error(
         "Error al crear el post:",
@@ -114,6 +115,7 @@ function CreatePost() {
           rows="6"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          required
         ></textarea>
       </div>
 
@@ -173,17 +175,20 @@ function CreatePost() {
           className="w-full p-3 rounded border border-gray-600 bg-[#2A2A2A] text-white focus:ring-2 focus:ring-[#9147FF] focus:outline-none"
           type="file"
           onChange={(e) => setImage(e.target.files[0])}
+          required
         />
       </div>
 
       {/* Botón de enviar */}
       <div className="text-center">
-        <button
-          className="px-6 py-3 bg-[#9147FF] rounded-lg font-semibold text-white hover:bg-[#7329cc] focus:outline-none focus:ring-4 focus:ring-[#9147FF]/50 transition"
-          type="submit"
-        >
-          Crear Publicación
-        </button>
+          
+              <button
+                className="px-6 py-3 bg-[#9147FF] rounded-lg font-semibold text-white hover:bg-[#7329cc] focus:outline-none focus:ring-4 focus:ring-[#9147FF]/50 transition"
+                type="submit"
+              >
+                Crear Publicación
+              </button>
+            
       </div>
     </form>
       </div>
