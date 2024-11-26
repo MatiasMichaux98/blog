@@ -15,8 +15,9 @@ class User(AbstractUser):
     
     def save(self, *args, **kwars):
         email_username = self.email.split("@")
+        user = self.username
         if not self.full_name:
-            self.full_name = email_username
+            self.full_name = user
         if not self.username:
             self.username = email_username
         
