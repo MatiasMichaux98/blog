@@ -55,7 +55,7 @@ function CreatePost() {
     }
   };
   return (
-    <div className="grid grid-rows-1 sm:grid-cols-[0.3fr_3fr]  md:grid-cols-[0.3fr_3fr] laptop-md:grid-cols-[0.9fr_3fr]  lg:grid-cols-[0.3fr_3fr] bg-[#202020] ">
+    <div className="grid grid-cols-1 grid-rows-[auto,1fr] bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('https://cdn.pixabay.com/photo/2015/12/04/17/21/fractal-1076861_1280.jpg')" }}>
       <div className="">
         <Sidebar />
       </div>

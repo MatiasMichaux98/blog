@@ -1,85 +1,63 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import ButtonHamburger from "./ButtonHamburger";
+
 function Sidebar() {
   return (
-    <div className="bg-[#171717] h-screen p-[20px_0px_20px_20px] fixed z-[1000] w-[230px]         max-laptop-md:w-[70px] max-laptop-md:p-[20px_0px_20px_10px] max-sm:relative max-sm:w-screen max-sm:h-[60px]">
-      <ul id="list-side hover:bg-[#272727] ">
-        <div className=" max-sm:flex max-sm:justify-center max-sm:pl-[0] max-sm:mr-[0] ">
-          <li className="list-group-item">
-            <small className="flex justify-center text-[#E5E5E5] p[10px] text-sm max-laptop-md:hidden">
-              MAIN MENU
-            </small>
-          </li>
-          <li>
-            <hr className="border-slate-700" />
-          </li>
-
-          <Link to="/home">
-            <div className="p[10px] text-[#E5E5E5] p-2 hover:bg-[#272727] rounded-lg max-laptop-md:text-center">
-              <span
-                id="collapse-icon"
-                className="fa fa-home mr-3 max-laptop-md:text-base max-sm:text-center "
-              ></span>
-              <span
-                id="collapse-text"
-                className="text-sm max-laptop-md:hidden "
+    <div>
+      <nav className="mx-auto w-full max-w-5xl bg-gradient-to-r from-[#6C6C6C] to-[#B3B3B3] mt-12 rounded-lg h-12 shadow-lg">
+        <ButtonHamburger />
+        <div className="space-x-6 h-full flex items-center">
+          <ul className="hidden mediummore:flex justify-start cursor-pointer h-full text-center">
+            <li className="border-r border-gray-400 h-full flex items-center text-white hover:bg-gradient-to-r from-[#6E6E6E] to-[#2A2A2A] hover:rounded-l-lg">
+              <NavLink
+                to="/home"
+                className={({ isActive }) =>
+                  isActive
+                    ? "bg-gradient-to-r from-[#6E6E6E] to-[#2A2A2A]  p-3"
+                    : "p-4 text-[#3B3B3B] hover:text-[#B7B4B4]"
+                }
               >
-                Inicio
-              </span>
-            </div>
-          </Link>
-
-          <Link
-            to="/create-post"
-            className="bg-dark list-group-item list-group-item-action flex-column align-items-start"
-          >
-            <div className="p[10px] text-[#E5E5E5] p-2 text-sm hover:bg-[#272727] rounded-lg max-laptop-md:text-center">
-              <span
-                id="collapse-icon"
-                className="fa fa-edit fa-fw mr-3 max-laptop-md:text-base max-sm:text-center "
-              ></span>
-              <span id="collapse-text" className="text-sm max-laptop-md:hidden">
-                Crear
-              </span>
-            </div>
-          </Link>
-
-          <li>
-            <hr className="border-slate-700" />
-          </li>
-          <a
-            href="#"
-            className="bg-dark list-group-item list-group-item-action flex-column align-items-start"
-          >
-            <div className="p[10px] text-[#E5E5E5] p-2 text-sm hover:bg-[#272727] rounded-lg max-laptop-md:text-center">
-              <span
-                id="collapse-icon"
-                className="fa fa-question fa-fw mr-3 max-laptop-md:text-base max-sm:text-center "
-              ></span>
-              <span id="collapse-text" className="text-sm max-laptop-md:hidden">
-                Help
-              </span>
-            </div>
-          </a>
-          <li>
-            <hr className="border-slate-700" />
-          </li>
-          <Link to="/profile">
-            <div
-              id="d-flex-two"
-              className="p[10px] text-[#E5E5E5] p-2 hover:bg-[#272727] rounded-lg max-laptop-md:text-center "
-            >
-              <span
-                id="collapse-icon"
-                className="fa fa-user fa-fw mr-3 max-laptop-md:text-base max-sm:text-center "
-              ></span>
-              <span id="collapse-text" className="text-sm max-laptop-md:hidden">
-                Perfil
-              </span>
-              <span className="submenu-icon ml-auto"></span>
-            </div>
-          </Link>
+                <span className="fa-solid fa-house text-lg"></span>
+              </NavLink>
+            </li>
+            <li className="border-r border-gray-400 h-full flex items-center text-white hover:bg-gradient-to-r from-[#6E6E6E] to-[#2A2A2A]">
+              <NavLink
+                to="/create-post"
+                className={({ isActive }) =>
+                  isActive ? "bg-gradient-to-r from-[#6E6E6E] to-[#2A2A2A]  p-3" : "p-4"
+                }
+              >
+                CREATE-POST
+              </NavLink>
+            </li>
+            <li className="relative group border-r border-gray-400 h-full flex items-center">
+              <div className="h-full flex items-center text-white hover:bg-gradient-to-r from-[#6E6E6E] to-[#2A2A2A]">
+                <a className="p-4" href="#">
+                  CATEGORY
+                </a>
+              </div>
+              <ul className="absolute top-full hidden group-hover:block bg-[#FFFFFF] shadow-lg cursor-pointer rounded-md z-[99999]">
+                <li className="block px-4 py-2 hover:bg-[#F3F3F3]">
+                  <a href="#">Musica</a>
+                </li>
+                <li className="block px-4 py-2 hover:bg-[#F3F3F3]">
+                  <a href="#">Tecnología</a>
+                </li>
+              </ul>
+            </li>
+            <li className="border-r border-gray-400 h-full flex items-center text-white hover:bg-gradient-to-r from-[#6E6E6E] to-[#2A2A2A]">
+              <NavLink
+                to="/profile"
+                className={({ isActive }) =>
+                  isActive ? "bg-gradient-to-r from-[#6E6E6E] to-[#2A2A2A]  p-3" : "p-4"
+                }
+              >
+                PERFIL
+              </NavLink>
+            </li>
+          </ul>
         </div>
-      </ul>
+      </nav>
     </div>
   );
 }

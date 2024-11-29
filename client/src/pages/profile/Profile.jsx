@@ -57,16 +57,16 @@ function Profile() {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="grid  grid-rows-1 sm:grid-cols-[0.3fr_3fr]  md:grid-cols-[0.3fr_3fr] laptop-md:grid-cols-[0.9fr_3fr]  lg:grid-cols-[0.3fr_3fr] bg-[#202020]">
+    <div className="grid grid-cols-1 grid-rows-[auto,1fr] bg-cover bg-center bg-no-repeat " style={{ backgroundImage: "url('https://i.pinimg.com/736x/4e/46/0b/4e460b03961db52756fa318205571ef2.jpg')" }}>
       <div className="">
         <Sidebar />
       </div>
-      <div className=" p-8 min-h-screen">
+      <div className="mx-auto w-full max-w-5xl p-4 sm:p-6 md:p-8 min-h-screen  mt-6 sm:mt-8 rounded-lg bg-[#EBEBEB] ">
         <div className="container-profile">
           <div className="grid grid-cols-2 grid-rows-1 gap-0 p-8">
             <div className="flex justify-center ">
               <img
-                className="  rounded-full w-20 h-20 medium:w-32 medium:h-32  sm:w-48 sm:h-48  border-2 border-[#9147FF]"
+                className="  rounded-full w-20 h-20 md:w-32 md:h-32 lg:w-48 lg:h-48 border-2 border-[#000000]"
                 src={profile?.image || "ruta/a/imagen/default.jpg"}
                 alt="Perfil"
               />
@@ -74,12 +74,12 @@ function Profile() {
 
             <div className="col-span-1">
               <div className="profile-user-settings  ">
-                <h1 className="profile-user-name text-lg text-white">
+                <h1 className="profile-user-name text-lg text-[#000000]">
                   {profile?.full_name || "Usuario desconocido"}
                 </h1>
                 <div className="btn-settings flex flex-row gap-[0px]">
-                  <Link className="btn-profile-edit 	" to="/editProfile">
-                    <button className=" flex items-center p-1 pr-3 rounded-md text-white bg-[#9147FF] " >
+                  <Link className="btn-profile-edit bg-gradient-to-r from-[#6C6C6C] to-[#B3B3B3] 	" to="/editProfile">
+                    <button className=" flex items-center p-1 pr-3 text-white text-sm md:text-base  hover:bg-gradient-to-r from-[#6E6E6E] to-[#2A2A2A] " >
                     <span id="collapse-icon" className="fa fa-gear fa-fw mr-3  "></span>
                       Editar Perfil
                     </button>
@@ -87,7 +87,7 @@ function Profile() {
                 </div>
               </div>
               <div className="profile-bio ">
-                <span className="profile-real-name text-white text-base">
+                <span className="profile-real-name text-[#000000] text-base">
                   {(profile?.bio || "").split("\n").map((line, index) => (
                     <React.Fragment key={index}>
                       {line}
@@ -98,7 +98,7 @@ function Profile() {
               </div>
               <div className="profile-stats">
                 <ul>
-                  <li className="text-white text-lg">
+                  <li className="text-[#000000] text-lg">
                     <span className="profile-stat-count ">{posts.length}</span>{" "}
                     posts
                   </li>
@@ -109,7 +109,7 @@ function Profile() {
           <hr className="border-neutral-700 p-4" />
 
           <div className="flex justify-center ">
-            <div className="grid grid-cols-2 md:grid-cols-3 laptop-md:grid-cols-3 xl:grid-cols-3 gap-2 cursor-pointer ">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 cursor-pointer">
               {postsError ? (
                 <div className="col-span-full text-center text-red-500 font-semibold text-lg">
                   {postsError}
@@ -119,7 +119,7 @@ function Profile() {
                   <div key={index} className="">
                     <div className="  sm:max-w-64 lg:max-w-80 mx-auto  rounded-lg border-2 border-[#B366FF]">
                       <div className="grid grid-cols-1 gap-1 bg-[#ECE9E6] bg-custom-gradient">
-                        <div className="relative bg-auto bg-center w-full h-[150px] overflow-hidden">
+                        <div className="relative bg-auto bg-center w-full h-[150px] md:h-[200px] lg:h-[250px] overflow-hidden">
                           <img
                             src={post.image}
                             alt=""
@@ -128,9 +128,9 @@ function Profile() {
                         </div>
 
                         <div className="p-6 space-y-1">
-                          <div className="categoria w-[90px] ">
+                          <div className="flex justify-center categoria w-[90px] ">
                             <p
-                              className={`rounded-lg flex justify-center text-white text-sm ${getColorClass(
+                              className={`hidden medium:block rounded-lg px-3 text-white text-sm ${getColorClass(
                                 post.category?.name || "Sin categoría"
                               )}`}
                             >
@@ -148,11 +148,11 @@ function Profile() {
                         <div className="flex justify-between items-center p-[0px_20px_10px_20px]">
                           <div className="flex justify-start items-center	gap-1 button-wrapper">
                             <img
-                              className="rounded-full w-10 h-10 border-[#9147FF]"
+                              className="hidden sm:block rounded-full w-10 h-10 border-[#9147FF]"
                               src={profile.image}
                               alt="Perfil"
                             />
-                            <span className="text-xs">{profile.full_name}</span>
+                            <span className="text-xs hidden sm:block">{profile.full_name}</span>
                           </div>
                           <Link
                             className="text-sm hover:text-[#B366FF]"

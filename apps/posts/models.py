@@ -2,6 +2,7 @@ from django.db import models
 from apps.userProfile.models import Profile
 from apps.authentication.models import User
 from PIL import Image
+
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -32,6 +33,7 @@ class Post(models.Model):
     def __str__(self):
         return self.title
     
+
     def save(self, *args, **kwargs):
         #llamamos al metodo origina para guardar el archivo
         super().save(*args, **kwargs)
