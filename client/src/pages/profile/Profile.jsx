@@ -57,7 +57,7 @@ function Profile() {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="grid grid-cols-1 grid-rows-[auto,1fr] bg-cover bg-center bg-no-repeat " style={{ backgroundImage: "url('https://i.pinimg.com/736x/4e/46/0b/4e460b03961db52756fa318205571ef2.jpg')" }}>
+    <div className="grid grid-cols-1 grid-rows-[auto,1fr] bg-cover bg-center bg-no-repeat " style={{ backgroundImage: "url('https://w.wallhaven.cc/full/rr/wallhaven-rr9qzw.png')" }}>
       <div className="">
         <Sidebar />
       </div>

@@ -1,37 +1,34 @@
-import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
+import { Link } from "react-router-dom";
 import { getColorClass } from "../../utils/getColorClass";
 
-function Home() {
-  const [posts, setPosts] = useState([]);
-  const [error, setError] = useState(null);
-  const [postsError] = useState("");
+function PostCategory() {
+    const [posts, setPosts] = useState([]);
+    const [postsError] = useState("");
+    const { id } = useParams();  // Tomamos el 'id' de la categoría desde la URL
 
-  //Cargar los posts al montar el coponente
-  const loadPosts = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/post/");
-      console.log("Datos de posts:", response.data); // Verifica la estructura de los datos
-      setPosts(response.data);
-    } catch (error) {
-      setError("Error al cargar los posts: " + error.message);
-      console.error("Error al cargar los posts:", error);
-    }
-  };
-  useEffect(() => {
-    loadPosts();
-  }, []);
+    // Cargamos los posts cuando el componente se monta o el id de la categoría cambia
+    useEffect(() => {
+        const fetchCategoryPosts = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8000/category/${id}/`);
+                console.log(response.data); // Verifica lo que llega
+                setPosts(response.data);
+            } catch (error) {
+                console.error("Error al cargar los posts:", error);
+            }
+        };
+    
+        fetchCategoryPosts();
+    }, [id]);
 
-  // Manejar errores de carga
-  if (error) {
-    return <div>{error}</div>;
-  }
 
-  return (
-    <div
+
+    return (
+        <div
       className="grid grid-cols-1 grid-rows-[auto,1fr] bg-cover bg-center bg-no-repeat "
       style={{
         backgroundImage:
@@ -119,17 +116,13 @@ function Home() {
             </div>
           ))
         ) : (
-          <div className="col-span-full text-center text-white">
+          <div className="col-span-full text-center text-black">
             No hay posts disponibles
           </div>
         )}
       </div>
     </div>
-  );
+    );
 }
 
-export default Home;
-
-Home.propTypes = {
-  handleLogout: PropTypes.func.isRequired,
-};
+export default PostCategory;

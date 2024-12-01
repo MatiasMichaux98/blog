@@ -27,6 +27,14 @@ class CategoryListView(generics.ListAPIView):
     serializer_class = CategorySerializer
 
 
+class PostCategoryList(generics.ListAPIView):
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        category_id = self.kwargs.get('category_id')
+        category = get_object_or_404(Category, id=category_id)
+        return Post.objects.filter(category=category)
+    
 class PostListView(generics.ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer

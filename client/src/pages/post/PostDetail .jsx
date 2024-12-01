@@ -22,12 +22,12 @@ function PostDetail() {
 
   return (
 
-    <div className="grid grid-rows-1 sm:grid-cols-[0.3fr_3fr] md:grid-cols-[0.3fr_3fr] laptop-md:grid-cols-[0.9fr_3fr] lg:grid-cols-[0.3fr_3fr]  bg-[#202020]">
+    <div className="grid grid-cols-1 grid-rows-[auto,1fr] bg-cover bg-center bg-no-repeat " style={{ backgroundImage: "url('https://w.wallhaven.cc/full/rr/wallhaven-rr9qzw.png')" }}>
         <div>
         <Sidebar />
 
         </div>
-        <div className="bg-[#202020]">
+        <div className="mx-auto w-full max-w-5xl p-4 sm:p-6 md:p-8 min-h-screen  mt-6 sm:mt-8 rounded-lg bg-[#EBEBEB]">
       {post ? (
         <div className="p-8">
           <hr className="mt-5 border-neutral-700 p-4" />
@@ -63,7 +63,7 @@ function PostDetail() {
           
           <div className="p-10 text-justify">
             <hr className="mt-5 border-neutral-700 p-4" />
-            <p className="text-lg mt-2 text-white ">{post.description}</p>
+            <p className="text-lg mt-2 text-black ">{post.description}</p>
           </div>
           <hr className="mt-5 border-neutral-700 p-4" />
           <div className="flex flex-row justify-between	gap-1 button-wrapper">
@@ -73,14 +73,16 @@ function PostDetail() {
               src={`http://localhost:8000${post.profile_image}`} // Concatenamos la URL base con la ruta relativa
               alt="Perfil"
             />
-            <span className="text-xs text-white ml-2">{post.username}</span>
+            <span className="text-xs text-black ml-2">{post.username}</span>
            </div>
             <div className="flex items-center">
               <span className="far fa-clock mr-3  text-white "></span>
-              <p className="text-white">{post.date}</p>
+              <p className="text-black">{post.date}</p>
+              
             </div>
           </div>
         </div>
+        
       ) : (
         <p>Cargando...</p>
       )}

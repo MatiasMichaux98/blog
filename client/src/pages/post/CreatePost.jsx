@@ -55,12 +55,11 @@ function CreatePost() {
     }
   };
   return (
-    <div className="grid grid-cols-1 grid-rows-[auto,1fr] bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('https://cdn.pixabay.com/photo/2015/12/04/17/21/fractal-1076861_1280.jpg')" }}>
+    <div className="grid grid-cols-1 grid-rows-[auto,1fr] bg-cover bg-center bg-no-repeat " style={{ backgroundImage: "url('https://w.wallhaven.cc/full/rr/wallhaven-rr9qzw.png')" }}>
       <div className="">
         <Sidebar />
       </div>
-      <div className=" sm:p-8  min-h-screen overflow-hidden ">
-        <div className="flex flex-col  items-center">
+      <div className="flex flex-col  items-center">
             <div className=" relative inline-flex items-center">
                 <span className="hidden sm:block w-12 h-1 bg-[#9147FF] rounded-lg ml-4"></span>
                 <h2 className=" sm:text-3xl font-bold text-white text-center">
@@ -74,6 +73,8 @@ function CreatePost() {
         </div>
         <hr className="border-neutral-700 p-4" />
 
+      <div className=" mx-auto w-full max-w-5xl p-4 sm:p-6 md:p-8 min-h-screen  mt-6 sm:mt-8 rounded-lg bg-[#EBEBEB] ">
+        
     <div className="max-w-screen-sm w-full mx-auto p-4">
         
     </div>
