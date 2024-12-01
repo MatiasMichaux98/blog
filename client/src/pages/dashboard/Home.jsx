@@ -50,7 +50,7 @@ function Home() {
             {postsError}
           </div>
         ) : posts.length > 0 ? (
-          posts.map((post, index) => (
+          posts.slice().reverse().map((post, index) => (
             <div key={index} className="mb-4">
               <div className="  bg-[#ECE9E6] bg-custom-gradient">
                 {/* Texto con Image */}

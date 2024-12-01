@@ -8,14 +8,35 @@ import Sidebar from "../../components/Sidebar";
 import { getColorClass } from "../../utils/getColorClass";
 
 function Profile() {
-  const [profile, setProfile] = useState(null); // para los datos del perfil
+  const [profile, setProfile] = useState(null); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [posts, setPosts] = useState([]); // Estado para almacenar los posts del usuario
   const [postsError, setPostsError] = useState("");
+  
   // obtención del token id del usuario
   const token = localStorage.getItem("accessToken");
   const userId = token ? jwtDecode(token).user_id : null; // usa jwtDecode para extraer el id del usuario del token JWT
+
+   // Estado para manejar el modal de eliminación
+   const [showModal, setShowModal] = useState(false);
+   const [postToDelete, setPostToDelete] = useState(null);
+
+  //eliminar post 
+    const eliminarPublicacion = async (id) => {
+      if (!postToDelete) return;
+      try {
+          const response = await axios.delete(`http://localhost:8000/post/${id}/`);
+          if (response.status === 204) {
+              // Actualizar el estado para eliminar la publicación de la lista
+              setPosts(posts.filter(pub => pub.id !== id));//matiene las publicaciones que no tengan el id que voy a eliminar
+              console.log("Publicación eliminada");
+          }
+      } catch (error) {
+          console.error("Error al eliminar publicación:", error);
+      }
+  };
+
 
   // Función para cargar los posts del usuario
   const fetchUserPosts = useCallback(async () => {
@@ -115,7 +136,7 @@ function Profile() {
                   {postsError}
                 </div>
               ) : posts.length > 0 ? (
-                posts.map((post, index) => (
+                posts.slice().reverse().map((post, index) => (
                   <div key={index} className="">
                     <div className="  sm:max-w-64 lg:max-w-80 mx-auto  rounded-lg border-2 border-[#B366FF]">
                       <div className="grid grid-cols-1 gap-1 bg-[#ECE9E6] bg-custom-gradient">
@@ -128,14 +149,23 @@ function Profile() {
                         </div>
 
                         <div className="p-6 space-y-1">
-                          <div className="flex justify-center categoria w-[90px] ">
-                            <p
+                          <div className="flex justify-between">  
+                          <p
                               className={`hidden medium:block rounded-lg px-3 text-white text-sm ${getColorClass(
                                 post.category?.name || "Sin categoría"
                               )}`}
                             >
                               {post.category?.name || "Sin categoría"}
                             </p>
+                          <button
+                              onClick={() => {
+                                setPostToDelete(post.id);
+                                setShowModal(true);
+                              }}
+                              className="text-slate-500 hover:text-red-700 font-semibold text-sm"
+                            >
+                              <span className="fa fa-ellipsis-v"></span>
+                            </button>
                           </div>
                           <h3 className="text-[24px] font-playfair-display line-clamp-1">
                             {post.title}
@@ -144,6 +174,7 @@ function Profile() {
                           <p className="post-description-two text-sm text-[#212121] leading-relaxed line-clamp-3 font-quicksand text-lg  ">
                             {post.description}
                           </p>
+                          
                         </div>
                         <div className="flex justify-between items-center p-[0px_20px_10px_20px]">
                           <div className="flex justify-start items-center	gap-1 button-wrapper">
@@ -160,6 +191,7 @@ function Profile() {
                           >
                             Read More
                           </Link>
+                          
                         </div>
                       </div>
                     </div>
@@ -170,6 +202,28 @@ function Profile() {
               )}
             </div>
           </div>
+           {/* Modal de confirmación */}
+           {showModal && ( //si es verdadero muestra 
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+              <div className="bg-white p-6 rounded-lg">
+                <h2 className="text-lg font-semibold">¿Estás seguro de que quieres eliminar esta publicación?</h2>
+                <div className="mt-4 flex justify-end gap-4">
+                  <button
+                    onClick={() => setShowModal(false)}
+                    className="px-4 py-2 bg-gray-300 rounded-lg"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={eliminarPublicacion}
+                    className="px-4 py-2 bg-red-500 text-white rounded-lg"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

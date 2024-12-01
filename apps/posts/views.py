@@ -41,6 +41,7 @@ class PostListView(generics.ListAPIView):
     
     def get_serializer_context(self):
         return {'request': self.request}
+    
 
 class UserPostListView(generics.ListAPIView):
     serializer_class = PostSerializer
@@ -51,7 +52,7 @@ class UserPostListView(generics.ListAPIView):
         user = get_object_or_404(User, id=user_id)
         return Post.objects.filter(user=user)
         
-class PostDetailView(generics.RetrieveAPIView):
+class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     lookup_field = 'id'
