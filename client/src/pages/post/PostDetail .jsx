@@ -1,8 +1,10 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect  } from "react";
 import axios from "axios";
 import { getColorClass } from "../../utils/getColorClass";
 import Sidebar from "../../components/Sidebar";
+
+
 
 function PostDetail() {
   const { id } = useParams(); // params para obtner el id de la url
@@ -13,12 +15,14 @@ function PostDetail() {
       try {
         const response = await axios.get(`http://localhost:8000/post/${id}`);
         setPost(response.data);
+       
       } catch (error) {
         console.error("Error al cargar el post:", error);
       }
     };
     loadPost();
   }, [id]);
+
 
   return (
 
@@ -64,6 +68,7 @@ function PostDetail() {
           <div className="p-10 text-justify">
             <hr className="mt-5 border-neutral-700 p-4" />
             <p className="text-lg mt-2 text-black ">{post.description}</p>
+         
           </div>
           <hr className="mt-5 border-neutral-700 p-4" />
           <div className="flex flex-row justify-between	gap-1 button-wrapper">
@@ -74,12 +79,8 @@ function PostDetail() {
               alt="Perfil"
             />
             <span className="text-xs text-black ml-2">{post.username}</span>
+            
            </div>
-            <div className="flex items-center">
-              <span className="far fa-clock mr-3  text-white "></span>
-              <p className="text-black">{post.date}</p>
-              
-            </div>
           </div>
         </div>
         

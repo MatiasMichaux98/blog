@@ -6,6 +6,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from .models import Post, Category
 from apps.authentication.models import User
 from .serializers import PostSerializer,PostSerializers,CategorySerializer
+from rest_framework.exceptions import PermissionDenied
 
 # Create your views here.
 #crear Post
@@ -56,4 +57,5 @@ class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     lookup_field = 'id'
-
+    
+    

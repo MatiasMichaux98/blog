@@ -18,7 +18,7 @@ class PostSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Post
-        fields = ['id','title', 'description', 'category', 'tags', 'image','date','profile_image','username','day','month','year']
+        fields = ['id','user','title', 'description', 'category', 'tags', 'image','date','profile_image','username','day','month','year']
 
     def get_profile_image(self, obj):
         # Devuelve la URL de la imagen de perfil del usuario que creó el post

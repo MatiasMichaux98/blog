@@ -8,35 +8,34 @@ import Sidebar from "../../components/Sidebar";
 import { getColorClass } from "../../utils/getColorClass";
 
 function Profile() {
-  const [profile, setProfile] = useState(null); 
+  const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [posts, setPosts] = useState([]); // Estado para almacenar los posts del usuario
+  const [posts, setPosts] = useState([]);
   const [postsError, setPostsError] = useState("");
-  
-  // obtención del token id del usuario
+  // Obtención del token id del usuario
   const token = localStorage.getItem("accessToken");
-  const userId = token ? jwtDecode(token).user_id : null; // usa jwtDecode para extraer el id del usuario del token JWT
+  const userId = token ? jwtDecode(token).user_id : null; // Usa jwtDecode para extraer el id del usuario del token JWT
+  const [isModalOpen ,setIsModalOpen] = useState(false)
+  const [postToDelete, setPostToDelete] = useState(null);
 
-   // Estado para manejar el modal de eliminación
-   const [showModal, setShowModal] = useState(false);
-   const [postToDelete, setPostToDelete] = useState(null);
+ // Eliminar publicación
+ const eliminarPublicacion = async () => {
+  const Confirmado = window.confirm("¿Está seguro de eliminar?");
+  if (!Confirmado) {
+    return; // No se hace nada si el usuario cancela
+  }
 
-  //eliminar post 
-    const eliminarPublicacion = async (id) => {
-      if (!postToDelete) return;
-      try {
-          const response = await axios.delete(`http://localhost:8000/post/${id}/`);
-          if (response.status === 204) {
-              // Actualizar el estado para eliminar la publicación de la lista
-              setPosts(posts.filter(pub => pub.id !== id));//matiene las publicaciones que no tengan el id que voy a eliminar
-              console.log("Publicación eliminada");
-          }
-      } catch (error) {
-          console.error("Error al eliminar publicación:", error);
-      }
-  };
-
+  try {
+    const response = await axios.delete(`http://localhost:8000/post/${postToDelete}/`);
+    if (response.status === 204) {
+      setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postToDelete));
+      setIsModalOpen(false); 
+    }
+  } catch (error) {
+    console.error("Error al eliminar publicación:", error);
+  }
+};
 
   // Función para cargar los posts del usuario
   const fetchUserPosts = useCallback(async () => {
@@ -51,6 +50,7 @@ function Profile() {
     }
   }, [userId]);
 
+
   useEffect(() => {
     const fetchProfile = async () => {
       if (!userId) {
@@ -62,7 +62,7 @@ function Profile() {
         const response = await axios.get(
           `http://localhost:8000/profile/${userId}/`
         );
-        setProfile(response.data || {}); // Asegúrate de que profile tenga un valor aunque esté vacío
+        setProfile(response.data); 
         await fetchUserPosts();
       } catch (error) {
         setError("Error al cargar el perfil");
@@ -82,32 +82,32 @@ function Profile() {
       <div className="">
         <Sidebar />
       </div>
-      <div className="mx-auto w-full max-w-5xl p-4 sm:p-6 md:p-8 min-h-screen  mt-6 sm:mt-8 rounded-lg bg-[#EBEBEB] ">
+      <div className="mx-auto w-full max-w-5xl p-4 sm:p-6 md:p-8 min-h-screen mt-6 sm:mt-8 rounded-lg bg-[#EBEBEB] ">
         <div className="container-profile">
           <div className="grid grid-cols-2 grid-rows-1 gap-0 p-8">
             <div className="flex justify-center ">
               <img
-                className="  rounded-full w-20 h-20 md:w-32 md:h-32 lg:w-48 lg:h-48 border-2 border-[#000000]"
+                className="rounded-full w-20 h-20 md:w-32 md:h-32 lg:w-48 lg:h-48 border-2 border-[#000000]"
                 src={profile?.image || "ruta/a/imagen/default.jpg"}
                 alt="Perfil"
               />
             </div>
 
             <div className="col-span-1">
-              <div className="profile-user-settings  ">
+              <div className="profile-user-settings">
                 <h1 className="profile-user-name text-lg text-[#000000]">
                   {profile?.full_name || "Usuario desconocido"}
                 </h1>
                 <div className="btn-settings flex flex-row gap-[0px]">
-                  <Link className="btn-profile-edit bg-gradient-to-r from-[#6C6C6C] to-[#B3B3B3] 	" to="/editProfile">
-                    <button className=" flex items-center p-1 pr-3 text-white text-sm md:text-base  hover:bg-gradient-to-r from-[#6E6E6E] to-[#2A2A2A] " >
-                    <span id="collapse-icon" className="fa fa-gear fa-fw mr-3  "></span>
+                  <Link className="btn-profile-edit bg-gradient-to-r from-[#6C6C6C] to-[#B3B3B3]" to="/editProfile">
+                    <button className="flex items-center p-1 pr-3 text-white text-sm md:text-base hover:bg-gradient-to-r from-[#6E6E6E] to-[#2A2A2A]">
+                      <span id="collapse-icon" className="fa fa-gear fa-fw mr-3"></span>
                       Editar Perfil
                     </button>
                   </Link>
                 </div>
               </div>
-              <div className="profile-bio ">
+              <div className="profile-bio">
                 <span className="profile-real-name text-[#000000] text-base">
                   {(profile?.bio || "").split("\n").map((line, index) => (
                     <React.Fragment key={index}>
@@ -120,7 +120,7 @@ function Profile() {
               <div className="profile-stats">
                 <ul>
                   <li className="text-[#000000] text-lg">
-                    <span className="profile-stat-count ">{posts.length}</span>{" "}
+                    <span className="profile-stat-count">{posts.length}</span>{" "}
                     posts
                   </li>
                 </ul>
@@ -138,7 +138,7 @@ function Profile() {
               ) : posts.length > 0 ? (
                 posts.slice().reverse().map((post, index) => (
                   <div key={index} className="">
-                    <div className="  sm:max-w-64 lg:max-w-80 mx-auto  rounded-lg border-2 border-[#B366FF]">
+                    <div className="sm:max-w-64 lg:max-w-80 mx-auto rounded-lg border-2 border-[#B366FF]">
                       <div className="grid grid-cols-1 gap-1 bg-[#ECE9E6] bg-custom-gradient">
                         <div className="relative bg-auto bg-center w-full h-[150px] md:h-[200px] lg:h-[250px] overflow-hidden">
                           <img
@@ -149,41 +149,29 @@ function Profile() {
                         </div>
 
                         <div className="p-6 space-y-1">
-                          <div className="flex justify-between">  
-                          <p
+                          <div className="flex justify-between">
+                            <p
                               className={`hidden medium:block rounded-lg px-3 text-white text-sm ${getColorClass(
                                 post.category?.name || "Sin categoría"
                               )}`}
                             >
                               {post.category?.name || "Sin categoría"}
                             </p>
-                          <button
-                              onClick={() => {
-                                setPostToDelete(post.id);
-                                setShowModal(true);
-                              }}
-                              className="text-slate-500 hover:text-red-700 font-semibold text-sm"
-                            >
-                              <span className="fa fa-ellipsis-v"></span>
-                            </button>
+                         
                           </div>
                           <h3 className="text-[24px] font-playfair-display line-clamp-1">
                             {post.title}
                           </h3>
                           <hr className="border-4 w-[15%] border-[#B366FF]" />
-                          <p className="post-description-two text-sm text-[#212121] leading-relaxed line-clamp-3 font-quicksand text-lg  ">
+                          <p className="post-description-two text-sm text-[#212121] leading-relaxed line-clamp-3 font-quicksand text-lg">
                             {post.description}
                           </p>
-                          
+                         
                         </div>
                         <div className="flex justify-between items-center p-[0px_20px_10px_20px]">
-                          <div className="flex justify-start items-center	gap-1 button-wrapper">
-                            <img
-                              className="hidden sm:block rounded-full w-10 h-10 border-[#9147FF]"
-                              src={profile.image}
-                              alt="Perfil"
-                            />
-                            <span className="text-xs hidden sm:block">{profile.full_name}</span>
+                          <div className="flex justify-start items-center gap-1 button-wrapper">
+                              <button onClick={() => { setIsModalOpen(true); setPostToDelete(post.id); }}>OpenModal</button>
+                              
                           </div>
                           <Link
                             className="text-sm hover:text-[#B366FF]"
@@ -191,7 +179,6 @@ function Profile() {
                           >
                             Read More
                           </Link>
-                          
                         </div>
                       </div>
                     </div>
@@ -202,30 +189,42 @@ function Profile() {
               )}
             </div>
           </div>
-           {/* Modal de confirmación */}
-           {showModal && ( //si es verdadero muestra 
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-              <div className="bg-white p-6 rounded-lg">
-                <h2 className="text-lg font-semibold">¿Estás seguro de que quieres eliminar esta publicación?</h2>
-                <div className="mt-4 flex justify-end gap-4">
-                  <button
-                    onClick={() => setShowModal(false)}
-                    className="px-4 py-2 bg-gray-300 rounded-lg"
-                  >
-                    Cancelar
-                  </button>
-                  <button
-                    onClick={eliminarPublicacion}
-                    className="px-4 py-2 bg-red-500 text-white rounded-lg"
+        </div>
+      </div>
+      {isModalOpen && (
+                <div
+                className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50"
+                onClick={() => setIsModalOpen(false)} // Cierra el modal al hacer clic fuera 
+                >
+                <div
+                  className="bg-[#262626] p-6 rounded-lg shadow-lg max-w-sm w-full"
+                  onClick={(e) => e.stopPropagation()} // Evitar que el clic en el modal cierre el modal
+                >
+                 <div className=" flex flex-col gap-4 divide-y divide-slate-700">
+                 <button
+                    onClick={() => {
+                      eliminarPublicacion();
+                      setIsModalOpen(false);  // Cierra el modal después de eliminar
+                    }}
+                    className="px-4 py-2 bg-[#262626] text-rose-600 rounded"
                   >
                     Eliminar
                   </button>
+
+                    <button className="px-4 py-2 bg-[#262626] text-white rounded ">
+                          Editar 
+                    </button>
+                    
+                    <button
+                      onClick={() => setIsModalOpen(false)}
+                      className="px-4 py-2 bg-[#262626] text-white rounded"
+                    >
+                      Cerrar
+                    </button>
+                 </div>
                 </div>
               </div>
-            </div>
-          )}
-        </div>
-      </div>
+              )}
     </div>
   );
 }
