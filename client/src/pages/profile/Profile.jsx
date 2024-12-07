@@ -7,29 +7,30 @@ import "../../App.css";
 import Sidebar from "../../components/Sidebar";
 import { getColorClass } from "../../utils/getColorClass";
 import EditProfileModal from "./EditProfile";
+import PropTypes from "prop-types";
 
-function Profile() {
+function Profile({ handleLogout }) {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [posts, setPosts] = useState([]);
   const [postsError, setPostsError] = useState("");
-  
+
   // Obtención del token id del usuario
   const token = localStorage.getItem("accessToken");
   const userId = token ? jwtDecode(token).user_id : null; // Usa jwtDecode para extraer el id del usuario del token JWT
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [ModalOpen, setModalOpen] = useState(false);
   const [postToid, setPostToid] = useState(null);
   const [isModalOpens, setIsModalOpens] = useState(false);
 
   const openModal = () => setIsModalOpens(true);
   const closeModal = () => setIsModalOpens(false);
 
-// Función para actualizar el perfil desde el modal
-    const updateProfile = (updatedProfile) => {
-      setProfile(updatedProfile); // Actualiza el perfil con los nuevos datos
-    };
-
+  // Función para actualizar el perfil desde el modal
+  const updateProfile = (updatedProfile) => {
+    setProfile(updatedProfile); // Actualiza el perfil con los nuevos datos
+  };
 
   // Eliminar publicación
   const eliminarPublicacion = async () => {
@@ -120,24 +121,34 @@ function Profile() {
                   {profile?.full_name || "Usuario desconocido"}
                 </h1>
 
-                <a
-                  href="#_"
-                  className="relative p-0.5 inline-flex items-center justify-center font-bold overflow-hidden group rounded-md"
-                >
-                  <span className="w-full h-full bg-gradient-to-br from-[#ff8a05] via-[#ff5478] to-[#ff00c6] group-hover:from-[#ff00c6] group-hover:via-[#ff5478] group-hover:to-[#ff8a05] absolute"></span>
-                  <span className="relative px-6 py-3 transition-all ease-out bg-gray-900 rounded-md group-hover:bg-opacity-0 duration-400">
-                  <button onClick={openModal}
-                  className="text-white"
-                  >Editar Perfil</button>
-                        <EditProfileModal
-                            isOpen={isModalOpens}
-                            onClose={closeModal}
-                            currentProfile={profile}
-                            updateProfile={updateProfile}
-                        />
-                  </span>
-                </a>
+                <div className="flex ">
+                  <a
+                    href="#_"
+                    className="relative p-0.5 inline-flex items-center justify-center font-bold overflow-hidden group rounded-md"
+                  >
+                    <span className="w-full h-full bg-gradient-to-br from-[#ff8a05] via-[#ff5478] to-[#ff00c6] group-hover:from-[#ff00c6] group-hover:via-[#ff5478] group-hover:to-[#ff8a05] absolute"></span>
+                    <span className="relative px-3 py-3 transition-all ease-out bg-gray-900 rounded-md group-hover:bg-opacity-0 duration-400">
+                      <button onClick={openModal} className="text-white">
+                        Editar Perfil
+                      </button>
+                      <EditProfileModal
+                        isOpen={isModalOpens}
+                        onClose={closeModal}
+                        currentProfile={profile}
+                        updateProfile={updateProfile}
+                      />
+                    </span>
+                  </a>
+                  <button
+                    onClick={() => {
+                      setModalOpen(true);
+                    }}
+                  >
+                    <i className="fa fa-cog text-lg inline-block px-4"></i>
+                  </button>
+                </div>
               </div>
+
               <div className="profile-bio">
                 <span className="profile-real-name text-[#000000] text-base">
                   {(profile?.bio || "").split("\n").map((line, index) => (
@@ -194,7 +205,6 @@ function Profile() {
                               <div className="  flex justify-start items-center gap-1 button-wrapper">
                                 <button
                                   onClick={() => {
-                                    
                                     setIsModalOpen(true);
                                     setPostToid(post.id);
                                   }}
@@ -230,51 +240,66 @@ function Profile() {
           </div>
         </div>
       </div>
-      {isModalOpen && (
-  <div
-    className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50"
-    onClick={() => setIsModalOpen(false)} 
-  >
-    <div
-      className="bg-[#262626] p-6 rounded-lg shadow-lg max-w-sm w-full"
-      onClick={(e) => e.stopPropagation()} 
-    >
-      <div className="flex flex-col gap-4 divide-y divide-slate-700 items-center">
-        <button
-          onClick={() => {
-            eliminarPublicacion();
-            setIsModalOpen(false); 
-          }}
-          className="px-4 py-2 bg-[#262626] text-rose-600 rounded"
+      {ModalOpen && (
+        <div
+          className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50"
+          onClick={() => setModalOpen(false)}
         >
-          Eliminar
-        </button>
-
-        {postToid && (
-          <div>
-            <button className="px-4 py-2 bg-[#262626] text-white rounded">
-                <Link to={`/editpost/${postToid}`} className="text-white">
-                  
-                    editar
-                </Link>
-            </button>
-
+          <div
+            className="bg-[#262626] p-6 rounded-lg shadow-lg max-w-sm w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex flex-col gap-4 divide-y divide-slate-700 items-center text-white hover:text-rose-600">
+              <button onClick={handleLogout}>Cerrar Sesion </button>
+            </div>
           </div>
-        )}
-
-        <button
+        </div>
+      )}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50"
           onClick={() => setIsModalOpen(false)}
-          className="px-4 py-2 bg-[#262626] text-white rounded"
         >
-          Cerrar
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+          <div
+            className="bg-[#262626] p-6 rounded-lg shadow-lg max-w-sm w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex flex-col gap-4 divide-y divide-slate-700 items-center">
+              <button
+                onClick={() => {
+                  eliminarPublicacion();
+                  setIsModalOpen(false);
+                }}
+                className="px-4 py-2 bg-[#262626] text-rose-600 rounded"
+              >
+                Eliminar
+              </button>
 
+              {postToid && (
+                <div>
+                  <button className="px-4 py-2 bg-[#262626] text-white rounded">
+                    <Link to={`/editpost/${postToid}`} className="text-white">
+                      editar
+                    </Link>
+                  </button>
+                </div>
+              )}
+
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="px-4 py-2 bg-[#262626] text-white rounded"
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
 export default Profile;
+Profile.propTypes = {
+  handleLogout: PropTypes.func.isRequired,
+};

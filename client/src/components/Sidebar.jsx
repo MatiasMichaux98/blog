@@ -79,6 +79,7 @@ function Sidebar() {
                 PERFIL
               </NavLink>
             </li>
+
           </ul>
         </div>
       </nav>

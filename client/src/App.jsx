@@ -40,12 +40,12 @@ export default function App() {
       {/*rutas privadas */}
       <Route path="/home" element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <Home handleLogout={handleLogout}/>
+              <Home />
             </PrivateRoute>
           } />
       <Route path="/profile" element={
         <PrivateRoute isAuthenticated={isAuthenticated}>
-          <Profile />
+          <Profile handleLogout={handleLogout}/>
         </PrivateRoute>
       }/>
        
@@ -61,7 +61,7 @@ export default function App() {
           } />
         <Route path="/sidebar" element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <Sidebar />
+              <Sidebar  />
             </PrivateRoute>
           } />
         <Route path="/post/:id" element={
