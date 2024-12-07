@@ -38,15 +38,15 @@ function EditProfileModal({ isOpen, onClose, currentProfile, updateProfile }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsLoading(true); // Activar el estado de carga
-  
+        setIsLoading(true);
+    
         const formData = new FormData();
         if (image) {
             formData.append("image", image);
         }
         formData.append("full_name", profile.full_name);
         formData.append("bio", profile.bio);
-  
+    
         try {
             const response = await axios.patch(`http://localhost:8000/profile/${userId}/`, formData, {
                 headers: {
@@ -54,19 +54,18 @@ function EditProfileModal({ isOpen, onClose, currentProfile, updateProfile }) {
                     "Authorization": `Bearer ${token}`,
                 },
             });
-  
-            // Actualizar el perfil en el componente principal
+    
             updateProfile(response.data);
-            onClose(); //se cierra modal
-            alert("Perfil actualizado exitosamente");
-            
+            onClose();
+            setTimeout(() => alert("Perfil actualizado exitosamente"), 100);
         } catch (error) {
             console.error("Error al actualizar el perfil:", error);
             setError("Error al actualizar el perfil");
         } finally {
-            setIsLoading(false); // Desactivar el estado de carga
+            setIsLoading(false);
         }
     };
+    
   
     return (
         <ReactModal
@@ -111,7 +110,9 @@ function EditProfileModal({ isOpen, onClose, currentProfile, updateProfile }) {
                         />
                     </div>
                     <div className="form-actions">
-                        <button type="submit" className="submit-btn" disabled={isLoading}>Actualizar Perfil</button>
+                        <button type="submit" className="submit-btn" disabled={isLoading}>
+                            {isLoading ? "Actualizando..." : "Actualizar Perfil"}
+                        </button>
                         <button type="button" onClick={onClose} className="cancel-btn">Cancelar</button>
                     </div>
                 </form>

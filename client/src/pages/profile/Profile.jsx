@@ -19,7 +19,7 @@ function Profile() {
   const token = localStorage.getItem("accessToken");
   const userId = token ? jwtDecode(token).user_id : null; // Usa jwtDecode para extraer el id del usuario del token JWT
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [postToDelete, setPostToDelete] = useState(null);
+  const [postToid, setPostToid] = useState(null);
   const [isModalOpens, setIsModalOpens] = useState(false);
 
   const openModal = () => setIsModalOpens(true);
@@ -40,11 +40,11 @@ function Profile() {
 
     try {
       const response = await axios.delete(
-        `http://localhost:8000/post/${postToDelete}/`
+        `http://localhost:8000/post/${postToid}/`
       );
       if (response.status === 204) {
         setPosts((prevPosts) =>
-          prevPosts.filter((post) => post.id !== postToDelete)
+          prevPosts.filter((post) => post.id !== postToid)
         );
         setIsModalOpen(false);
       }
@@ -194,8 +194,9 @@ function Profile() {
                               <div className="  flex justify-start items-center gap-1 button-wrapper">
                                 <button
                                   onClick={() => {
+                                    
                                     setIsModalOpen(true);
-                                    setPostToDelete(post.id);
+                                    setPostToid(post.id);
                                   }}
                                 >
                                   <i className="fas fa-ellipsis-v text-lg inline-block px-4"></i>
@@ -230,43 +231,48 @@ function Profile() {
         </div>
       </div>
       {isModalOpen && (
-        <div
-          className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50"
-          onClick={() => setIsModalOpen(false)} // Cierra el modal al hacer clic fuera
+  <div
+    className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50"
+    onClick={() => setIsModalOpen(false)} 
+  >
+    <div
+      className="bg-[#262626] p-6 rounded-lg shadow-lg max-w-sm w-full"
+      onClick={(e) => e.stopPropagation()} 
+    >
+      <div className="flex flex-col gap-4 divide-y divide-slate-700 items-center">
+        <button
+          onClick={() => {
+            eliminarPublicacion();
+            setIsModalOpen(false); 
+          }}
+          className="px-4 py-2 bg-[#262626] text-rose-600 rounded"
         >
-          <div
-            className="bg-[#262626] p-6 rounded-lg shadow-lg max-w-sm w-full"
-            onClick={(e) => e.stopPropagation()} // Evitar que el clic en el modal cierre el modal
-          >
-            <div className=" flex flex-col gap-4 divide-y divide-slate-700">
-              <button
-                onClick={() => {
-                  eliminarPublicacion();
-                  setIsModalOpen(false); // Cierra el modal después de eliminar
-                }}
-                className="px-4 py-2 bg-[#262626] text-rose-600 rounded"
-              >
-                Eliminar
-              </button>
+          Eliminar
+        </button>
 
-              <button className="px-4 py-2 bg-[#262626] text-white rounded ">
-                {posts.map((post, index) => (
-                  <div key={index}>
-                    <Link to={`/editpost/${post.id}`}>Editar</Link>
-                  </div>
-                ))}
-              </button>
+        {postToid && (
+          <div>
+            <button className="px-4 py-2 bg-[#262626] text-white rounded">
+                <Link to={`/editpost/${postToid}`} className="text-white">
+                  
+                    editar
+                </Link>
+            </button>
 
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 bg-[#262626] text-white rounded"
-              >
-                Cerrar
-              </button>
-            </div>
           </div>
-        </div>
-      )}
+        )}
+
+        <button
+          onClick={() => setIsModalOpen(false)}
+          className="px-4 py-2 bg-[#262626] text-white rounded"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 }

@@ -66,7 +66,7 @@ function CreatePost() {
                 </h2>
                 <span className="hidden sm:block w-12 h-1 bg-[#9147FF] rounded-lg ml-4"></span>
             </div>
-            <p className="text-gray-400 text-base mt-3 max-w-prose text-center ">
+            <p className="text-white text-lg mt-3 max-w-prose text-center ">
             Completa los campos a continuación para crear un nuevo artículo o publicación.
             </p>
         </div>

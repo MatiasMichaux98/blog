@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Sidebar from "../../components/Sidebar";
 import axios from "axios";
 
 function EditPost() {
@@ -93,7 +94,17 @@ function EditPost() {
   };
 
   return (
-    <div className="edit-post">
+    <div  className="grid grid-cols-1 grid-rows-[auto,1fr] bg-cover bg-center bg-no-repeat "
+    style={{
+      backgroundImage:
+        "url('https://w.wallhaven.cc/full/rr/wallhaven-rr9qzw.png')",
+    }}
+    >
+      <div className="1">
+        <Sidebar />
+      </div>
+
+      <div className="mx-auto w-full max-w-5xl p-4 sm:p-6 md:p-8 min-h-screen  mt-6 sm:mt-8 rounded-lg bg-[#EBEBEB] cursor-pointer">
       <h1>Editar Publicación</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -118,8 +129,8 @@ function EditPost() {
         </div>
         <div className="form-group">
           <label htmlFor="description" className="form-label">Descripción</label>
-          <input
-            type="text"
+          <textarea
+            type="textarea"
             id="description"
             name="description"
             className="form-input"
@@ -142,9 +153,18 @@ function EditPost() {
         ))}
       </select>
 
-        <button type="submit">Guardar Cambios</button>
+      <a href="#_" className="mt-3 relative inline-flex items-center justify-center px-6 py-3 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group">
+    <span className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"></span>
+    <span className="absolute inset-0 w-full h-full bg-white rounded-md "></span>
+    <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "></span>
+    <span className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"><button className="" type="submit">Guardar Cambios</button></span>
+</a>
+        
       </form>
     </div>
+    </div>
+
+    
   );
 }
 
