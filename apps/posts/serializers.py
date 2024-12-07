@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import Category, Post
-from apps.userProfile.serializers import ProfileSerializer
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -8,7 +7,8 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ['id','name']
 
 class PostSerializer(serializers.ModelSerializer):
-    category = CategorySerializer()
+    category_id = serializers.PrimaryKeyRelatedField(source='category', queryset=Category.objects.all(), write_only=True)
+    category = CategorySerializer(read_only=True)
     profile_image = serializers.SerializerMethodField() 
     username = serializers.SerializerMethodField()
     date = serializers.DateTimeField(format='%d/%m/%Y')
@@ -18,7 +18,7 @@ class PostSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Post
-        fields = ['id','user','title', 'description', 'category', 'tags', 'image','date','profile_image','username','day','month','year']
+        fields = ['id','user','title', 'description', 'category','category_id', 'tags', 'image','date','profile_image','username','day','month','year']
 
     def get_profile_image(self, obj):
         # Devuelve la URL de la imagen de perfil del usuario que creó el post

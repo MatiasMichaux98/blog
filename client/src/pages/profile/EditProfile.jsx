@@ -1,118 +1,130 @@
+import ReactModal from 'react-modal';
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom";
-import "../../styles/EditProfile.css"
+import { useEffect, useState } from "react";
+import "../../styles/EditProfile.css";
+import PropTypes from 'prop-types';
 
-function EditProfile() {
-    const[profile, setProfile] = useState({full_name:"",bio:"",image:""});
-    const[image, setImage] = useState(null)
-    const[error, setError] = useState("")
-    const navigate = useNavigate()
-    
+ReactModal.setAppElement('#root'); // Establece el elemento raíz para accesibilidad
+
+function EditProfileModal({ isOpen, onClose, currentProfile, updateProfile }) {
+    const [profile, setProfile] = useState({ full_name: "", bio: "", image: "" });
+    const [image, setImage] = useState(null);
+    const [error, setError] = useState("");
+    const [isLoading, setIsLoading] = useState(false); // Estado de carga
+
     const token = localStorage.getItem('accessToken');
     const userId = token ? jwtDecode(token).user_id : null;
 
+    
     useEffect(() => {
-        const fetchProfile = async () => {
-            try{
-                const response = await axios.get(`http://localhost:8000/profile/${userId}/`)
-                setProfile(response.data)
-            }catch(error){
-                setError('Error al cargar el perfil', error)
-            }
+        if (currentProfile) {
+            setProfile(currentProfile); 
         }
-        if (userId) fetchProfile();
-    },[userId])
+    }, [currentProfile]);
 
-    //editar campos del usuario 
     const handleChange = (e) => {
         setProfile({
-            ...profile,//crea una copia de los valores actuales
-            [e.target.name]: e.target.value
-             //e.target.name obtiene el atributo del que campo que fue cambiado 
-            //e.target.value tiene el nuevo valor que ingreso el usuario 
-        })
-    }
+            ...profile,
+            [e.target.name]: e.target.value,
+        });
+    };
 
-    //editor imagen del usuario 
     const handleImageChange = (e) => {
-        const file = e.target.files[0]//es una lista de archivos seleccionados por el usuario 
-        //file[0] representa el primer archivo que el usuario selecciono , se almace el archivo en la variable file 
-        setImage(file)
-        setProfile({...profile, image:URL.createObjectURL(File)})//actualiza el profile.image con una url temporal para que se pueda ver en la interfaz 
-    }
+        const file = e.target.files[0];
+        setImage(file);
+        setProfile({ ...profile, image: URL.createObjectURL(file) });
+    };
 
-    //actualizacion del perfil
-    const handleSubmit = async(e) => {
-        e.preventDefault()
-
-        const formData = new FormData();//objeto que permite construir datos de formulario con pares de clave-valor 
-
-        //se agregan los datos al formdata
-        if(image){
-            formData.append("image",image)
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsLoading(true); // Activar el estado de carga
+  
+        const formData = new FormData();
+        if (image) {
+            formData.append("image", image);
         }
-        formData.append("full_name", profile.full_name)
-        formData.append("bio", profile.bio)
-
-        try{
-            await axios.patch(`http://localhost:8000/profile/${userId}/`, formData,{
+        formData.append("full_name", profile.full_name);
+        formData.append("bio", profile.bio);
+  
+        try {
+            const response = await axios.patch(`http://localhost:8000/profile/${userId}/`, formData, {
                 headers: {
-                    "Content-Type": "multipart/form-data",//ndica que la solicitud contiene datos de formulario y archivos.
-                    "Authorization": `Bearer ${token}`
-                }
-            })
+                    "Content-Type": "multipart/form-data",
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
+  
+            // Actualizar el perfil en el componente principal
+            updateProfile(response.data);
+            onClose(); //se cierra modal
             alert("Perfil actualizado exitosamente");
-            navigate("/profile")
-        }catch(error){
+            
+        } catch (error) {
             console.error("Error al actualizar el perfil:", error);
             setError("Error al actualizar el perfil");
+        } finally {
+            setIsLoading(false); // Desactivar el estado de carga
         }
-    }
-  return (
-    <div className="profile-container">
-  <h3 className="profile-title">Editar Perfil</h3>
-  {error && <div className="error-message">{error}</div>}
-  <form onSubmit={handleSubmit} className="profile-form">
-    <div className="form-group">
-      <label htmlFor="profile-image" className="form-label">Imagen de perfil</label>
-      <input
-        type="file"
-        id="profile-image"
-        className="form-input"
-        onChange={handleImageChange}
-      />
-    </div>
-    <div className="form-group">
-      <label htmlFor="full-name" className="form-label">Nombre Completo</label>
-      <input
-        type="text"
-        id="full-name"
-        name="full_name"
-        className="form-input"
-        value={profile.full_name}
-        onChange={handleChange}
-      />
-    </div>
-    <div className="form-group">
-      <label htmlFor="bio" className="form-label">Biografía:</label>
-      <textarea
-        id="bio"
-        name="bio"
-        className="form-input"
-        value={profile.bio}
-        onChange={handleChange}
-      />
-    </div>
-    <div className="form-actions">
-      <button type="submit" className="submit-btn">Actualizar Perfil</button>
-      <button type="button" onClick={() => navigate("/profile")} className="cancel-btn">Cancelar</button>
-    </div>
-  </form>
-</div>
-
-  )
+    };
+  
+    return (
+        <ReactModal
+            isOpen={isOpen}
+            onRequestClose={onClose}
+            contentLabel="Editar Perfil"
+            className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50"
+            overlayClassName="modal-overlay"
+        >
+            <div className="profile-container">
+                <h3 className="profile-title">Editar Perfil</h3>
+                {error && <div className="error-message">{error}</div>}
+                <form onSubmit={handleSubmit} className="profile-form">
+                    <div className="form-group">
+                        <label htmlFor="profile-image" className="form-label">Imagen de perfil</label>
+                        <input
+                            type="file"
+                            id="profile-image"
+                            className="form-input"
+                            onChange={handleImageChange}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="full-name" className="form-label">Nombre Completo</label>
+                        <input
+                            type="text"
+                            id="full-name"
+                            name="full_name"
+                            className="form-input"
+                            value={profile.full_name}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="bio" className="form-label">Biografía:</label>
+                        <textarea
+                            id="bio"
+                            name="bio"
+                            className="form-input"
+                            value={profile.bio}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="form-actions">
+                        <button type="submit" className="submit-btn" disabled={isLoading}>Actualizar Perfil</button>
+                        <button type="button" onClick={onClose} className="cancel-btn">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </ReactModal>
+    );
 }
 
-export default EditProfile
+EditProfileModal.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    currentProfile: PropTypes.object.isRequired,
+    updateProfile: PropTypes.func.isRequired,
+};
+
+export default EditProfileModal;

@@ -27,7 +27,6 @@ function CreatePost() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Category selected:", category);
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);

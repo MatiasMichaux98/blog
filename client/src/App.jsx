@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Home from "./pages/dashboard/Home";
 import PrivateRoute from './layouts/PrivateRoute'
 import Profile from "./pages/profile/Profile";
-import EditProfile from "./pages/profile/EditProfile";
 import CreatePost from "./pages/post/CreatePost";
 import Sidebar from "./components/Sidebar";
 import PostDetail from "./pages/post/PostDetail ";
@@ -49,11 +48,7 @@ export default function App() {
           <Profile />
         </PrivateRoute>
       }/>
-       <Route path="/editprofile" element={
-        <PrivateRoute isAuthenticated={isAuthenticated}>
-          <EditProfile />
-        </PrivateRoute>
-      }/>
+       
       <Route path="/editpost/:id" element={
         <PrivateRoute isAuthenticated={isAuthenticated}>
           <EditarPublicaciones/>
